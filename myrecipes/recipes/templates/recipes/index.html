@@ -1,0 +1,10 @@
+{% if latest_recipes_list %}
+    <ul>
+    {% for recipe in latest_recipes_list %}
+    {# Namespace: https://docs.djangoproject.com/en/1.10/intro/tutorial03/#namespacing-url-names #}
+        <li><a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
