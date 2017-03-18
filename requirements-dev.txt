@@ -1,0 +1,7 @@
+django
+# Django material desing frontend and admin
+# https://github.com/viewflow/django-material
+django-material
+# Pretty cloured test
+# https://github.com/CleanCut/green
+green
