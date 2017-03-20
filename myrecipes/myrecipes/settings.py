@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # 'material.theme.purple',
     'material',
     'material.admin',
+    'common.apps.CommonConfig',
     'recipes.apps.RecipesConfig',
     'django.contrib.admin',
     'django.contrib.auth',

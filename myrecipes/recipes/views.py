@@ -1,25 +1,28 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.views.generic import View
 
 
-from .models import Recipes
+from .models import Recipe
 
 
 class Index(generic.ListView):
     """
-    Recipes list
+    Recipe list
     """
     template_name = 'recipes/index.html'
     context_object_name = 'latest_recipes_list'
+    paginate_by = 5
 
     def get_queryset(self):
         """
         Return the last five published recipes (not including those set to be
         published in the future).
         """
-        return Recipes.objects.order_by('title')[:5]
+        return Recipe.objects.order_by('datetime_modificated')
+        # return Recipe.objects.values_list('id', 'title').order_by('datetime_modificated')[:5]
 
 
 class Detail(generic.DetailView):
@@ -30,7 +33,7 @@ class Detail(generic.DetailView):
         """
         Excludes any recipes that aren't published yet.
         """
-        return Recipes.objects.all()
+        return Recipe.objects.all()
 
     # def get_context_data(self, **kwargs):
     #     """
@@ -43,31 +46,17 @@ def new_recipe(request):
     """
     New recipe form
     """
-    return render(request, 'recipes/new.html')
+    return render(request, 'recipes/base.html')
 
 
-def create_recipe(request, recipe_id):
-    """
-    Save recipe to database
-    """
-    recipe = get_object_or_404(Recipes, pk=recipe_id)
-    print(recipe)
-    print(request.POST)
-    # return HttpResponseRedirect(reverse('recipes:results', args=(recipe.id)))
-# def get_name(request):
-#     # if this is a POST request we need to process the form data
-#     if request.method == 'POST':
-#         # create a form instance and populate it with data from the request:
-#         # form = RecipeName(request.POST)
-#         # check whether it's valid:
-#         if form.is_valid():
-#             # process the data in form.cleaned_data as required
-#             # ...
-#             # redirect to a new URL:
-#             return HttpResponseRedirect('/thanks/')
-#
-#     # if a GET (or any other method) we'll create a blank form
-#     else:
-#         # form = RecipeName()
-#
-#     return render(request, 'index.html', {'form': form})
+class CreateRecipe(generic.CreateView):
+    model = Recipe
+    # form_class = UserForm
+    success_url = reverse_lazy('recipes:new')
+    fields = ['title', 'short_description']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        redirect_url = super(CreateRecipe, self).form_valid(form)
+        # messages.success(self.request, 'Creada receta. La receta está desactivada hasta que un administrador lo revise. ')
+        return redirect_url

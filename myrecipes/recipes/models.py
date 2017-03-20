@@ -1,14 +1,23 @@
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth.models import User
 
 
-class Recipes(models.Model):
-    title = models.CharField(max_length=50)
+class Recipe(models.Model):
+    title = models.CharField(max_length=50, unique=True)
     short_description = models.CharField(max_length=140)
-    # datetime_created = models.DateTimeField(default=timezone.now())
+    # datetime_created = models.DateTimeField(default=timezone.now)
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modificated = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User)
     publish = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
+# FIXME Crear meta para que siempre ordene por
+# datetime_modificated, tanto en admin como front
+# class RecipeX(Recipe):
+#
+#     @staticmethod
+#     def foo():
+#         print("hi")
