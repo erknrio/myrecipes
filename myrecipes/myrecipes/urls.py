@@ -21,5 +21,7 @@ from . import views
 urlpatterns = [
     url(r'^recipes/', include('recipes.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.error_404, name='404')
+    url(r'^$', views.error_404, name='404'),
+    # Accounts agrega opcion de login y logout
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 ]

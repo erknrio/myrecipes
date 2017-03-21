@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from .models import Recipe
@@ -49,14 +50,24 @@ def new_recipe(request):
     return render(request, 'recipes/base.html')
 
 
-class CreateRecipe(generic.CreateView):
+class RecipeCreate(LoginRequiredMixin, generic.CreateView):
     model = Recipe
-    # form_class = UserForm
+    # Al insertar redirecciona a la misma url de insercion
+    # se usa reverse_lazy xq en este punto la URL no ha sido
+    # cargada cuando se importa el fichero
     success_url = reverse_lazy('recipes:new')
+    # Campos a mostrar en el formulario,
+    # si no se especifica muestra todos
     fields = ['title', 'short_description']
 
     def form_valid(self, form):
+        # Al hacer la validacion, debemos agregar a la receta
+        # el autor de esta. Django nos devuelve el usuario
+        # mediante el objeto request. Debemos estar logeados
+        # para que funcione adecuadamente.
+        # Docu: https://docs.djangoproject.com/en/1.10/topics/class-based-views/generic-editing/#model-forms
+        # En la segunda nota se aclara
         form.instance.author = self.request.user
-        redirect_url = super(CreateRecipe, self).form_valid(form)
+        redirect_url = super(RecipeCreate, self).form_valid(form)
         # messages.success(self.request, 'Creada receta. La receta está desactivada hasta que un administrador lo revise. ')
         return redirect_url

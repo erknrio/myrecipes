@@ -11,7 +11,5 @@ urlpatterns = [
     # ex: /recipes/1/
     url(r'^(?P<pk>[0-9]+)/$', views.Detail.as_view(), name='detail'),
     # ex: /recipes/new/
-    url(r'^new/$', views.CreateRecipe.as_view(), name='new'),
-    # ex: /recipes/create
-    url(r'^create/$', views.create_recipe, name='create'),
+    url(r'^new/$', views.RecipeCreate.as_view(), name='new'),
 ]
