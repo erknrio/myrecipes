@@ -16,11 +16,6 @@ class RecipeAdmin(admin.ModelAdmin):
     exclude = ('slug', 'author')
 
 
-# class DishTypeAdmin(admin.ModelAdmin):
-#     verbose_name = 'Tipo de plato'
-#     verbose_name_plural = 'Tipos de platos'
-
-
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Difficult)
 admin.site.register(Thematic)
