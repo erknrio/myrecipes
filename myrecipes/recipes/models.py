@@ -27,14 +27,6 @@ class FoodType(models.Model):
         return self.description
 
 
-class PublicTarget(models.Model):
-    # children, birthday, professional events, etc.
-    description = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.description
-
-
 class Difficult(models.Model):
     description = models.CharField(max_length=50)
 
@@ -50,6 +42,14 @@ class Thematic(models.Model):
         return self.description
 
 
+class PublicTarget(models.Model):
+    # children, birthday, professional events, etc.
+    description = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.description
+
+
 class IngredientAlternative(models.Model):
     description = models.CharField(max_length=50)
 
@@ -59,7 +59,7 @@ class IngredientAlternative(models.Model):
 
 class Ingredient(models.Model):
     description = models.CharField(max_length=50)
-    ingredient_alternative = models.ForeignKey(IngredientAlternative, on_delete=models.CASCADE)
+    ingredient_alternative = models.ManyToManyField(IngredientAlternative, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
@@ -78,12 +78,14 @@ class Recipe(models.Model):
     title = models.CharField(max_length=50, unique=True)
     slug = models.SlugField()
     short_description = models.CharField(max_length=140, verbose_name='Descripción breve')
-    dish_type = models.ForeignKey(DishType, on_delete=models.CASCADE)
+    dish_type = models.ForeignKey(DishType, on_delete=models.CASCADE, default=1)
+    food_type = models.ManyToManyField(FoodType)
     difficult = models.ForeignKey(Difficult, on_delete=models.CASCADE)
     directions_time = models.PositiveSmallIntegerField(verbose_name='Tiempo de preparación')
-    price = models.PositiveSmallIntegerField(verbose_name='Precio (€)')
+    price = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Precio (€)')
     person_number = models.PositiveSmallIntegerField(verbose_name='Comensales', default=1)
     thematic = models.ForeignKey(Thematic, on_delete=models.CASCADE)
+    public_target = models.ForeignKey(PublicTarget, on_delete=models.CASCADE)
     ingredients = models.ManyToManyField(Ingredient)
     directions = models.TextField()
     calories = models.PositiveSmallIntegerField(blank=True, null=True)

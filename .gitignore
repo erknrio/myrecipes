@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# virtualenv
+recipesenv/
+virtualenv/
+
 # Django stuff:
 *.log
 local_settings.py
@@ -73,9 +77,6 @@ target/
 
 # celery beat schedule file
 celerybeat-schedule
-
-# virtualenv
-recipesenv/
 
 # IDE
 .idea/
