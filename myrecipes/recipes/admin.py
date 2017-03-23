@@ -3,7 +3,8 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
 
-from .models import Recipe, Difficult, Thematic, Ingredient, DishType, FoodType, PublicTarget
+from .models import DishType, FoodType, Difficult, Thematic, PublicTarget,\
+    IngredientAlternative, Ingredient, Recipe
 
 
 @receiver(pre_save, sender=Recipe)
@@ -13,13 +14,14 @@ def genera_slug(sender, instance, using, **kwargs):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    exclude = ('slug', 'author')
+    exclude = ('slug',)
 
 
-admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(Difficult)
-admin.site.register(Thematic)
-admin.site.register(Ingredient)
 admin.site.register(DishType)
 admin.site.register(FoodType)
+admin.site.register(Difficult)
+admin.site.register(Thematic)
 admin.site.register(PublicTarget)
+admin.site.register(IngredientAlternative)
+admin.site.register(Ingredient)
+admin.site.register(Recipe, RecipeAdmin)

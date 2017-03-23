@@ -4,22 +4,15 @@ django==1.10
 #
 django-material
 #
+# Generate jpg from models
+#
+django-extensions
+pyparsing
+pydot
+#
+# Informacion en este gist:
+# https://gist.github.com/erknrio/d7d061006974b8f357510c125f8a9661
+#
 # Pretty cloured test
 # https://github.com/CleanCut/green
-green
-#
-# Generate jpg from models
-django-extensions
-# Habilitar en installed apps:
-# http://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
-#
-# Instalar graphviz
-#
-# pygraphviz
-# Con python2: http://django-extensions.readthedocs.io/en/latest/graph_models.html
-# Con python3 usar apt install graphviz grapviz-dev
-# pip3 install pygraphviz==1.4rc1
-#
-# Generar entorno nuevo con virtualenv:
-# virtualenv virtualenv --system-site-packages --python=python3
-# pip install requirements
+# green
