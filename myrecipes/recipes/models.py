@@ -90,7 +90,7 @@ class Recipe(models.Model):
     directions = models.TextField()
     calories = models.PositiveSmallIntegerField(blank=True, null=True)
     nutritional_value = models.PositiveSmallIntegerField(blank=True, null=True)
-    conservation = models.CharField(max_length=140, blank=True, null=True)
+    conservation = models.CharField(max_length=255, blank=True, null=True)
     # FIXME Este campo podria ser un textfield
     # o mejor un enlace a otra receta existente
     reuse = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
