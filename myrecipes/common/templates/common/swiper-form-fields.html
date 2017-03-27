@@ -1,0 +1,21 @@
+<!-- Slider main container -->
+    <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            {% for field in form %}
+            <div class="swiper-slide">
+                {{ field }}
+                {# {{ field.errors }} #}
+                {# {{ field.label_tag }} {{ field }} #}
+            </div>
+            {% endfor %}
+            <div class="swiper-slide">
+                ¡Gracias!
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>

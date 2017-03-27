@@ -1,0 +1,16 @@
+{% extends "common/base.html" %}
+{% load staticfiles %}
+
+{% block extra_head %}
+<!-- Swiper -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/css/swiper.min.css">
+<link rel="stylesheet" href="{% static "css/styles-swiper.css" %}">
+<!-- /Swiper -->
+{% endblock extra_head %}
+
+{% block extra_body %}
+<!-- Swiper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="{% static "js/main-swiper.js" %}"></script>
+<!-- /Swiper -->
+{% endblock extra_body %}
